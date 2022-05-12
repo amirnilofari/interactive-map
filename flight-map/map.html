@@ -43,6 +43,56 @@
     //yazd  to ahvaz
     var plane_yazdTOahvz = JSON.parse('[{"lat":31.8974,"lng":54.3569},{"lat":31.3183,"lng":48.6706}]');
 
+    var seqGroup1 = L.motion.seq([
+        L.motion.polyline(plane_shzTOesf, {
+            color: "transparent"
+        }, {
+            easing: L.Motion.Ease.easeInOutQuad
+        }, {
+            removeOnEnd: true,
+            icon: L.divIcon({html: "<img src='./image/icons8-airport-50.png' style='transform: rotate(-45deg)'>"})
+        }).motionDuration(8000).bindTooltip("IRI-324"),
+
+        L.motion.polyline(plane_esfTOteh, {
+            color: "transparent"
+        }, {
+            easing: L.Motion.Ease.easeInOutQuad
+        }, {
+            removeOnEnd: true,
+            icon: L.divIcon({html: "<img src='./image/icons8-airport-50.png' style='transform: rotate(-50deg)'>"})
+        }).motionDuration(8000).bindTooltip("IRI-324"),
+
+
+    ]).addTo(map);
+
+    var seqGroup2 = L.motion.seq([
+        L.motion.polyline(plane_mashTOyazd, {
+            color: "transparent"
+        }, {
+            easing: L.Motion.Ease.easeInOutQuad
+        }, {
+            removeOnEnd: true,
+            icon: L.divIcon({html: "<img src='./image/icons8-airport-50.png' style='transform: rotate(180deg)'>"})
+        }).motionDuration(8000).bindTooltip("IRI-198"),
+
+        L.motion.polyline(plane_yazdTOahvz, {
+            color: "transparent"
+        }, {
+            easing: L.Motion.Ease.easeInOutQuad
+        }, {
+            removeOnEnd: true,
+            icon: L.divIcon({html: "<img src='./image/icons8-airport-50.png' style='transform: rotate(210deg)'>"})
+        }).motionDuration(8000).bindTooltip("IRI-198"),
+
+
+    ]).addTo(map);
+
+
+    setTimeout(function () {
+        seqGroup1.motionStart();
+        seqGroup2.motionStart();
+    }, 1000);
+
 
 </script>
 </body>
