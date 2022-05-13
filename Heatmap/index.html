@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>Leaflet HeatMap</title>
+    	<meta charset="utf-8" />
+
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        
+        <style>
+            html, body, #map { width: 100%; height: 100%; margin: 0px; padding: 0px;}
+			.leaflet-div-icon {
+				background: transparent!important;
+				border: none!important;
+				color: white;
+			}
+
+			.red {
+				color: red!important;
+			}
+        </style>
+     </head>
+
+    <body>
+
+		<div id="map"></div>
+    	<script>
+			var map = L.map("map").setView([56.1210604, -3.021240], 10);
+
+			L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+				attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+			}).addTo(map);
+
+            let totalRec_rows= 10
+            let totalRec_cols= 30
+
+            size_rec = 0.3
+
+            var colorRec = "red"
+
+            var  p1 = [29, 45]
+            for (i = 0; i < totalRec_rows ; i++){
+                for (j = 0 ; j < totalRec_cols; j++){
+                    p2 = [p1[0]+size_rec, p1[1]+size_rec*2]
+                    var bounds = [p1,p2,(i*i + j*j)/(totalRec_rows*totalRec_rows + totalRec_cols*totalRec_cols)]
+
+                    if (bounds[2] >=0 && bounds[2] <= 0.1) {
+                        colorRec = "#0100ff"
+                    }
+                    if (bounds[2] > 0.1 && bounds[2] <= 0.2) {
+                        colorRec = "#1a00e6"
+                    }
+                    if (bounds[2] >0.2 && bounds[2] <= 0.3) {
+                        colorRec = "#3500ca"
+                    }
+                    if (bounds[2] > 0.3 && bounds[2] <= 0.4) {
+                        colorRec = "#5800a7"
+                    }
+                    if (bounds[2] > 0.4 && bounds[2] <= 0.5) {
+                        colorRec = "#73008c"
+                    }
+                    if (bounds[2] > 0.5 && bounds[2] <= 0.6) {
+                        colorRec = "#a0005f"
+                    }
+                    if (bounds[2] > 0.6 && bounds[2] <= 0.7) {
+                        colorRec = "#c4003b"
+
+                    }
+                    if (bounds[2] > 0.8 && bounds[2] <= 0.9) {
+                        colorRec = "#e5001a"
+
+                    }
+                    if (bounds[2] > 0.9 && bounds[2] <= 1) {
+                        colorRec = "#ff0000"
+                    }
+                    // create an orange rectangle
+                    L.rectangle(bounds, {color: "transparent", weight: 1,fillColor: colorRec}).addTo(map);
+
+                    setTimeout(() => { console.log("control request"); }, 5000);
+                    // zoom the map to the rectangle bounds
+                    map.fitBounds(bounds);
+
+                    p1[0] = p2[0]
+                    p1[1] = p1[1]
+                }
+
+                p1[0] = 29
+                p1[1] = p2[1]
+            }
+
+            // const myTimeout = setTimeout(myGreeting, 5000);
+            //
+            // function myStopFunction() {
+            //     clearTimeout(myTimeout);
+            // }
+
+            // L.rectangle(bounds2, {color: "transparent", weight: 1,fillColor:"red"}).addTo(map);
+            //
+            // // zoom the map to the rectangle bounds
+            // map.fitBounds(bounds2);
+
+    	</script>
+    </body>
+
+</html>
